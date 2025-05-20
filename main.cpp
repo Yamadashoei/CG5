@@ -64,9 +64,9 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 #pragma endregion
 
-#pragma region RasterizeState
+#pragma region RasterizeState 
 	D3D12_RASTERIZER_DESC rasterizerDesc{};
-	// 裏面（反時計回り）をカリングする
+	///裏面（反時計回り）をカリングする
 	rasterizerDesc.CullMode = D3D12_CULL_MODE_BACK;
 	// 塗りつぶしモードをソリッドにする（ワイヤーフレームならD3D12_FILL_MODE_WIREFRAME）
 	rasterizerDesc.FillMode = D3D12_FILL_MODE_SOLID;
@@ -79,7 +79,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 #pragma endregion
 
 #pragma region PixelShaderをCompile
-	// PixelShaderの読み込みとコンパイル
+	// PixelShaderの読み込みとコンパイル 
 	ID3DBlob* psBlob = CompileShader(L"Resources/Shaders/TestPS.hlsl", "ps_5_0");
 	assert(psBlob != nullptr);
 #pragma endregion
