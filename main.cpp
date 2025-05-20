@@ -103,7 +103,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// PSOの生成
 	ID3D12PipelineState* graphicsPipelineState = nullptr;
 	hr = dxCommon->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
-	assert(SUCCEEDED(hr));
+	assert(SUCCEEDED(hr)); 
 #pragma endregion
 
 #pragma region InputLyout
