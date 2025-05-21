@@ -1,0 +1,5 @@
+[*.{cpp,h,hlsl,hlsli}]
+charset=utf-8
+
+# [*.{cpp,h}]
+# charset = utf-8
