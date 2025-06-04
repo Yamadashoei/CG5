@@ -117,7 +117,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MiscUtility.cpp" />
+    <ClCompile Include="PipelineState.cpp" />
+    <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">
@@ -209,7 +212,10 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MiscUtility.h" />
+    <ClInclude Include="PipelineState.h" />
+    <ClInclude Include="RootSignature.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="VertexBuffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

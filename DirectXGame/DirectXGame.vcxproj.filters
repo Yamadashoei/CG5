@@ -13,88 +13,118 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="シェーダー ファイル">
+    <Filter Include="シェーダー ファイル%28 hlsl類 %29">
       <UniqueIdentifier>{718c7f4c-fc51-40ad-a221-b9456a7a1a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{b3a99196-cb31-4590-b95f-be19ce796f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\scene">
+      <UniqueIdentifier>{2adcc8cd-c92e-4e33-96e7-7cd4c832998e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Utility %28汎用類%29">
+      <UniqueIdentifier>{1dbae837-8c26-472c-9535-2b087d17cd0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Graphics %28描画関連%29">
+      <UniqueIdentifier>{9a53f7d3-33d4-4d29-b6c8-fb3024ef27c2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Engine\scene</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="main.cpp">
+      <Filter>Engine</Filter>
     </ClCompile>
     <ClCompile Include="MiscUtility.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Engine\Utility %28汎用類%29</Filter>
+    </ClCompile>
+    <ClCompile Include="PipelineState.cpp">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClCompile>
+    <ClCompile Include="RootSignature.cpp">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\SpriteVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ShapeVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ShapePS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjPS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\ObjVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PrimitivePS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\PrimitiveVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\TerrainVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="TestVS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
     <FxCompile Include="TestPS.hlsl">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Sprite.hlsli">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
     <None Include="Resources\shaders\Shape.hlsli">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
     <None Include="Resources\shaders\Obj.hlsli">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
     <None Include="Resources\shaders\Primitive.hlsli">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
     <None Include="Resources\shaders\Terrain.hlsli">
-      <Filter>シェーダー ファイル</Filter>
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Engine\scene</Filter>
     </ClInclude>
     <ClInclude Include="MiscUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Engine\Utility %28汎用類%29</Filter>
+    </ClInclude>
+    <ClInclude Include="PipelineState.h">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClInclude>
+    <ClInclude Include="RootSignature.h">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Engine\Graphics %28描画関連%29</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
