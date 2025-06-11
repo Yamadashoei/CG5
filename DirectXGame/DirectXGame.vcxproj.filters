@@ -51,6 +51,9 @@
     <ClCompile Include="VertexBuffer.cpp">
       <Filter>Engine\Graphics %28描画関連%29</Filter>
     </ClCompile>
+    <ClCompile Include="IndexBuffer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\SpritePS.hlsl">
@@ -125,6 +128,9 @@
     </ClInclude>
     <ClInclude Include="VertexBuffer.h">
       <Filter>Engine\Graphics %28描画関連%29</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
