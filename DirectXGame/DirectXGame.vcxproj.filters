@@ -86,10 +86,10 @@
     <FxCompile Include="Resources\shaders\TerrainVS.hlsl">
       <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
-    <FxCompile Include="TestVS.hlsl">
+    <FxCompile Include="Resources\shaders\TestVS.hlsl">
       <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
-    <FxCompile Include="TestPS.hlsl">
+    <FxCompile Include="Resources\shaders\TestPS.hlsl">
       <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </FxCompile>
   </ItemGroup>
@@ -107,6 +107,9 @@
       <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
     <None Include="Resources\shaders\Terrain.hlsli">
+      <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
+    </None>
+    <None Include="Resources\shaders\Test.hlsli">
       <Filter>シェーダー ファイル%28 hlsl類 %29</Filter>
     </None>
   </ItemGroup>
