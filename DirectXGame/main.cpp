@@ -220,6 +220,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// ゲームシーンの更新
 		gameScene->Update();
 
+
 		// TransitionBarrierをSRV→RTVに設定する
 		D3D12_RESOURCE_BARRIER barrier{};
 		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -258,7 +259,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		// 指定した深度で画面全体をクリアする
 		commandList->ClearDepthStencilView(dsvHandeleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
-		// 描画
+		// 描画↓
+		
+		// ゲームシーンの描画
+		gameScene->Draw();
+
 
 		// TransitionBarrierをSRV =>RTVに設定する
 		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
@@ -268,14 +273,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 		commandList->ResourceBarrier(1, &barrier);
 
-		// ゲームシーンの描画
-		gameScene->Draw();
-
 		// 描画開始
 		dxCommon->PreDraw();
 
 		// コマンドを読む
-		commandList->SetGraphicsRootSignature(rs.Get()); // rootsignatureの設定
+		commandList->SetGraphicsRootSignature(rs.Get()); // rootSignatureの設定
 
 		commandList->SetPipelineState(pipelineState.Get());                       // PSOの設定をする
 		commandList->IASetVertexBuffers(0, 1, vb.GetView());                      // VBVの設定
