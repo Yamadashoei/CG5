@@ -25,7 +25,7 @@ Matrix4x4 WorldTransformEx::MakeAffineMatrix() {
 	// Translation Matrixを作成
 	Matrix4x4 matTrans = MakeTranslateMatrix(translation_);
 
-	// Wolrd Matrixを計算
+	// World Matrixを計算
 	Matrix4x4 matWorld = matScale * matRot * matTrans;
 
 	return matWorld;

@@ -5,6 +5,7 @@
 #include "RootSignature.h"
 #include "Shader.h"
 #include "VertexBuffer.h"
+#include "WorldTransformEx.h"
 #include <Windows.h>
 
 using namespace KamataEngine;
@@ -39,6 +40,21 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	GameScene* gameScene = new GameScene();
 	// ゲームシーンの初期化
 	gameScene->Initialize();
+
+#pragma region アプリで利用する3Dモデル
+	// 被写体の準備
+	Model* model = Model::CreateFromOBJ("terrain");
+
+	WorldTransformEx worldTransform;
+	worldTransform.Initialize();
+	worldTransform.scale_ = Vector3(1.0f, 1.0f, 1.0f);
+
+	// カメラの準備
+	Camera camera;
+	camera.Initialize();
+	camera.translation_ = Vector3(0.0f, 1.0f, 0.0f);
+
+#pragma endregion
 
 #pragma region RootSignature作成
 	RootSignature rs;
@@ -120,7 +136,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 #pragma endregion
 
-	// Resource生成、Heap生成、View生成
+	// Resource生成
 
 	ID3D12Device* device = dxCommon->GetDevice();
 	HRESULT hr;
@@ -131,7 +147,6 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	ID3D12Resource* renderTextureResource = CreateRenderTextureResource(device, WinApp::kWindowWidth, WinApp::kWindowHeight, DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, kRenderTargetClearColor);
 
 #pragma region RTV用のDescriptorHeapを作成する
-	// 1 , RTVのDescriptorHeapをの生成
 	ID3D12DescriptorHeap* rtvDescriptorHeap = nullptr;
 
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDescriptorHeapDesc{};
@@ -142,22 +157,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	assert(SUCCEEDED(hr));
 
 	// CPU側から見たHANDLEを取得しておく
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandleCPU = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandeleCPU = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 #pragma endregion
 
 #pragma region RTV用のViewの設定
-	// 2 , RTV用のViewの生成
-	device->CreateRenderTargetView(renderTextureResource, nullptr, rtvHandleCPU);
+	device->CreateRenderTargetView(renderTextureResource, nullptr, rtvHandeleCPU);
 #pragma endregion
 
 #pragma region DepthStencilTextureResourceの設定
-	// 0、 DepthStencilTextureResourceの作成
 	ID3D12Resource* depthStencilResource = CreateDepthStencilTextureResource(device, WinApp::kWindowWidth, WinApp::kWindowHeight);
 
 #pragma endregion
 
 #pragma region DSV用のDescriptorHeapを作成する
-	// 1、 DSVのDescriptorHeapをの生成
 	ID3D12DescriptorHeap* dsvDescriptorHeap = nullptr;
 
 	D3D12_DESCRIPTOR_HEAP_DESC dsvDescriptorHeapDesc{};
@@ -169,21 +181,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	assert(SUCCEEDED(hr));
 
 	// CPU側から見たHANDLEを取得しておく
-	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandeleCPU = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandleCPU = dsvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 #pragma endregion
 
 #pragma region DSV用のViewの生成
-	// 2、 DSV用のViewの生成
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc{};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
 
 	// DSVHeapの先頭にDSVを作る
-	device->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvHandeleCPU);
+	device->CreateDepthStencilView(depthStencilResource, &dsvDesc, dsvHandleCPU);
 #pragma endregion
 
 #pragma region SRV用のDescriptorHeapを作成する
-	// １	SRVのDescriptorHeapをの生成
 	ID3D12DescriptorHeap* srvDescriptorHeap = nullptr;
 
 	D3D12_DESCRIPTOR_HEAP_DESC srvDescriptorHeapDesc{};
@@ -195,12 +205,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	assert(SUCCEEDED(hr));
 
 	// CPU側から見たHANDLEを取得しておく
-	D3D12_CPU_DESCRIPTOR_HANDLE srvHandeleCPU = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
-	D3D12_GPU_DESCRIPTOR_HANDLE srvHandeleGPU = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE srvHandleCPU = srvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_GPU_DESCRIPTOR_HANDLE srvHandleGPU = srvDescriptorHeap->GetGPUDescriptorHandleForHeapStart();
 #pragma endregion
 
 #pragma region DSV用のViewの生成
-	// ２、SRV用のViewの生成
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -208,7 +217,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	srvDesc.Texture2D.MipLevels = 1;
 
 	// DSVHeapの先頭にDSVを作る
-	device->CreateShaderResourceView(renderTextureResource, &srvDesc, srvHandeleCPU);
+	device->CreateShaderResourceView(renderTextureResource, &srvDesc, srvHandleCPU);
 #pragma endregion
 
 	// メインループ
@@ -217,6 +226,14 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		if (KamataEngine::Update()) {
 			break;
 		}
+
+		// world変換行列の定数バッファへの転送
+		worldTransform.rotation_.y += 0.005f;
+		worldTransform.UpdateMatrix();
+
+		// cameraの更新と定数バッファへの転送
+		camera.UpdateMatrix();
+
 		// ゲームシーンの更新
 		gameScene->Update();
 
@@ -230,7 +247,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList->ResourceBarrier(1, &barrier);
 
 		// 描画先のRTVとDSVを設定する
-		commandList->OMSetRenderTargets(1, &rtvHandleCPU, false, &dsvHandeleCPU);
+		commandList->OMSetRenderTargets(1, &rtvHandeleCPU, false, &dsvHandleCPU);
 
 		// Viewportの設定
 		D3D12_VIEWPORT viewport{};
@@ -254,13 +271,19 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList->RSSetScissorRects(1, &scissorRect);
 
 		// 全画面クリア
-		commandList->ClearRenderTargetView(rtvHandleCPU, kRenderTargetClearColor, 0, nullptr);
+		commandList->ClearRenderTargetView(rtvHandeleCPU, kRenderTargetClearColor, 0, nullptr);
 		// 指定した深度で画面全体をクリアする
-		commandList->ClearDepthStencilView(dsvHandeleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+		commandList->ClearDepthStencilView(dsvHandleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
 		// 描画
+		Model::PreDraw(commandList);
+		model->Draw(worldTransform, camera);
+		Model::PostDraw();
 
-		// TransitionBarrierをSRV =>RTVに設定する
+		// ゲームシーンの描画
+		gameScene->Draw();
+
+		// TransitionBarrierをもとに戻し、PixelShaderが扱えるようにする
 		barrier.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
 		barrier.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
 		barrier.Transition.pResource = renderTextureResource;
@@ -268,14 +291,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		barrier.Transition.StateAfter = D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE;
 		commandList->ResourceBarrier(1, &barrier);
 
-		// ゲームシーンの描画
-		gameScene->Draw();
-
 		// 描画開始
 		dxCommon->PreDraw();
 
 		// コマンドを読む
-		commandList->SetGraphicsRootSignature(rs.Get()); // rootsignatureの設定
+		commandList->SetGraphicsRootSignature(rs.Get()); // rootSignatureの設定
 
 		commandList->SetPipelineState(pipelineState.Get());                       // PSOの設定をする
 		commandList->IASetVertexBuffers(0, 1, vb.GetView());                      // VBVの設定
@@ -286,7 +306,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList->SetDescriptorHeaps(srvDescriptorHeap->GetDesc().NumDescriptors, &srvDescriptorHeap);
 
 		// SRVのDescriptorTableの先頭を設定
-		commandList->SetGraphicsRootDescriptorTable(0, srvHandeleGPU);
+		commandList->SetGraphicsRootDescriptorTable(0, srvHandleGPU);
 
 		// 画面を覆うポリゴンの描画
 		commandList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
@@ -297,6 +317,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 
 	// ゲームシーンの解放
 	delete gameScene;
+	delete model;
 	// nullptrの代入
 	gameScene = nullptr;
 
@@ -367,7 +388,7 @@ void SetupPipelineState(PipelineState& pipelineState, RootSignature& rs, Shader&
 
 ID3D12Resource* CreateRenderTextureResource(ID3D12Device* device, uint32_t width, uint32_t height, DXGI_FORMAT format, const FLOAT* clearColor) {
 
-	// 1, 生成するRenderTextureのDesc設定
+	// 1, 生成するRenderTextureの Desc設定
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = UINT(width);
 	resourceDesc.Height = UINT(height);
@@ -399,7 +420,7 @@ ID3D12Resource* CreateRenderTextureResource(ID3D12Device* device, uint32_t width
 }
 
 ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t width, int32_t height) {
-	// 1, 生成するDepthStencilTextureのdesc設定
+	// 1, 生成するDepthStencilTextureのDesc設定
 	D3D12_RESOURCE_DESC resourceDesc{};
 	resourceDesc.Width = width;
 	resourceDesc.Height = height;
