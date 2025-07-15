@@ -1,6 +1,7 @@
+#include "KamataEngine.h"
+
 #include "GameScene.h"
 #include "IndexBuffer.h"
-#include "KamataEngine.h"
 #include "PipelineState.h"
 #include "RootSignature.h"
 #include "Shader.h"
@@ -157,11 +158,11 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	assert(SUCCEEDED(hr));
 
 	// CPU側から見たHANDLEを取得しておく
-	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandeleCPU = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandleCPU = rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 #pragma endregion
 
 #pragma region RTV用のViewの設定
-	device->CreateRenderTargetView(renderTextureResource, nullptr, rtvHandeleCPU);
+	device->CreateRenderTargetView(renderTextureResource, nullptr, rtvHandleCPU);
 #pragma endregion
 
 #pragma region DepthStencilTextureResourceの設定
@@ -247,7 +248,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList->ResourceBarrier(1, &barrier);
 
 		// 描画先のRTVとDSVを設定する
-		commandList->OMSetRenderTargets(1, &rtvHandeleCPU, false, &dsvHandleCPU);
+		commandList->OMSetRenderTargets(1, &rtvHandleCPU, false, &dsvHandleCPU);
 
 		// Viewportの設定
 		D3D12_VIEWPORT viewport{};
@@ -271,7 +272,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		commandList->RSSetScissorRects(1, &scissorRect);
 
 		// 全画面クリア
-		commandList->ClearRenderTargetView(rtvHandeleCPU, kRenderTargetClearColor, 0, nullptr);
+		commandList->ClearRenderTargetView(rtvHandleCPU, kRenderTargetClearColor, 0, nullptr);
 		// 指定した深度で画面全体をクリアする
 		commandList->ClearDepthStencilView(dsvHandleCPU, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
