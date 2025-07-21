@@ -1,5 +1,6 @@
 #include "VertexBuffer.h"
 #include <KamataEngine.h>
+#include <cassert>
 
 using namespace KamataEngine;
 
@@ -27,6 +28,7 @@ void VertexBuffer::Create(const UINT size, const UINT stride) {
 	HRESULT hr =
 	    dxCommon->GetDevice()->CreateCommittedResource(&uploadHeapProperties, D3D12_HEAP_FLAG_NONE, &vertexResourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&vertexResource));
 	assert(SUCCEEDED(hr)); // うまくいかなかったら動かない
+	(void)hr;              // 警告を抑制
 #pragma endregion
 
 	// 生成した頂点リソースをとっておく
