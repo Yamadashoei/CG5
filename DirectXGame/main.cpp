@@ -53,7 +53,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 	// カメラの準備
 	Camera camera;
 	camera.Initialize();
-	camera.translation_ = Vector3(0.0f, 1.0f, 0.0f);
+	camera.translation_ = Vector3(0.0f, 2.0f, -12.0f);
 
 #pragma endregion
 
@@ -229,7 +229,7 @@ int WINAPI WinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPSTR, _In_ int) {
 		}
 
 		// world変換行列の定数バッファへの転送
-		worldTransform.rotation_.y += 0.005f;
+		//worldTransform.rotation_.y += 0.005f;
 		worldTransform.UpdateMatrix();
 
 		// cameraの更新と定数バッファへの転送
