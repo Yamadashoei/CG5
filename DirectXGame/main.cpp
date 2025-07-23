@@ -415,9 +415,8 @@ ID3D12Resource* CreateRenderTextureResource(ID3D12Device* device, uint32_t width
 
 	// 4, RenderTextureResourceの生成
 	ID3D12Resource* resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue, IID_PPV_ARGS(&resource));
+	[[maybe_unused]]HRESULT hr = device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, &clearValue, IID_PPV_ARGS(&resource));
 	assert(SUCCEEDED(hr));
-	(void)hr; // 警告を抑制
 
 	return resource;
 }
@@ -446,8 +445,8 @@ ID3D12Resource* CreateDepthStencilTextureResource(ID3D12Device* device, int32_t 
 
 	// 3, Resourceの生成
 	ID3D12Resource* resource = nullptr;
-	HRESULT hr = device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(&resource));
-	(void)hr; // 警告を抑制
+	[[maybe_unused]] HRESULT hr = device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_DEPTH_WRITE, &depthClearValue, IID_PPV_ARGS(&resource));
+	
 
 	assert(SUCCEEDED(hr));
 	return resource;

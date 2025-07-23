@@ -9,9 +9,8 @@ void PipelineState::Create(D3D12_GRAPHICS_PIPELINE_STATE_DESC graphicsPipelineSt
 	DirectXCommon* dxCommon = DirectXCommon::GetInstance();
 	// PSOの生成
 	ID3D12PipelineState* graphicsPipelineState = nullptr;
-	HRESULT hr = dxCommon->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
+	[[maybe_unused]] HRESULT hr = dxCommon->GetDevice()->CreateGraphicsPipelineState(&graphicsPipelineStateDesc, IID_PPV_ARGS(&graphicsPipelineState));
 	assert(SUCCEEDED(hr));
-	(void)hr; // 警告を抑制
 
 	// 生成したPipelineStateをとっておく
 	pipelineState_ = graphicsPipelineState;
